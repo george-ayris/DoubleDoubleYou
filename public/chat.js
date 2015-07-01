@@ -5,7 +5,7 @@ window.onload = function() {
   var sendButton = document.getElementById('send');
   var content = document.getElementById('content');
 
-  socket.on('message', function(data) {
+  socket.on('message', function(data) { // process username
     console.log('Message received: ' + data.message);
     if(data.message) {
       messages.push(data.message);
@@ -22,6 +22,9 @@ window.onload = function() {
   sendButton.onclick = function() {
     var text = field.value;
     console.log('Sending message: ' + text);
-    socket.emit('send', {message: text});
+    socket.emit('send', {message: text}); // add sender name to message
   }
+
+  // Get username via popup
+  socket.emit('register', {name: username});
 }

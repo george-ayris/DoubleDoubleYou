@@ -18,8 +18,17 @@ io.sockets.on('connection', function(socket) {
   console.log('Client connected');
   socket.emit('message', { message: 'welcome'});
 
+  socket.on('register', function(data) {
+    // store new person online
+    // send back list of online people
+  })
+
   socket.on('send', function(data) {
     console.log('Received chat message');
     io.sockets.emit('message', data);
+  });
+
+  socket.on('disconnect', function() {
+    // tell everyone that user has left
   });
 });
