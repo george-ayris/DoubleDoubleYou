@@ -18,9 +18,10 @@ var io = require('socket.io').listen(expressApp);
 io.sockets.on('connection', function(socket) {
   console.log('Client connected');
   socket.on('register', function(data) {
-    socket.emit('message', { message: 'Welcome ' + data.username + '.\n'});
-    users.push(data.username);
-    socket.broadcast.emit('message', { message: data.username + ' is now online'});
+    socket.emit('message', { message: 'Welcome, ' + data.username + '!' });
+    socket.username = data.username;
+    //users.push(data.username);
+    socket.broadcast.emit('message', { message: data.username + ' is now online' });
   });
 
   socket.on('send', function(data) {
@@ -29,7 +30,7 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('disconnect', function() {
-    console.log()
-    // tell everyone that user has left
+    console.log(socket.username + ' disconnected');
+    socket.broadcast.emit('message', { message: socket.username + ' left the chat' })
   });
 });
