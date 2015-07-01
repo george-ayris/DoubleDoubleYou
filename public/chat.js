@@ -1,6 +1,6 @@
 window.onload = function() {
   var messages = [];
-  var socket = io.connect('http://192.168.1.22:3700');
+  var socket = io.connect('http://192.168.1.16:3700');
   var messageInput = document.getElementById('field');
   var sendButton = document.getElementById('send');
   var content = document.getElementById('content');
@@ -19,6 +19,13 @@ window.onload = function() {
       message: messageInput.value
     });
     messageInput.value = "";
+  };
+
+  messageInput.onkeypress = function(event) {
+    event = event || window.event;
+    if(event.keyCode == 13) {
+      sendButton.click();
+    }
   }
 
   var username = prompt('Please enter your name:', '');
