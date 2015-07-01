@@ -5,12 +5,12 @@ window.onload = function() {
   var sendButton = document.getElementById('send');
   var content = document.getElementById('content');
 
-  socket.on('message', function(data) { // process username
+  socket.on('message', function(data) {
     console.log('Message received: ' + data.message);
-    if(data.message) {
+    if(data.username) {
       content.innerHTML += data.username + ': ' + data.message + '<br />';
     } else {
-      console.log('There is a problem:', data);
+      content.innerHTML += data.message + '<br />';
     }
   });
 
@@ -23,7 +23,6 @@ window.onload = function() {
     });
   }
 
-  // Get username via popup
   var username = prompt('Please enter your name:', '');
   socket.emit('register', {username: username});
 }
