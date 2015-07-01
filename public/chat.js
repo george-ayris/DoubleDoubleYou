@@ -1,6 +1,6 @@
 window.onload = function() {
   var messages = [];
-  var socket = io.connect('http://192.168.1.16:3700');
+  var socket = io.connect('http://192.168.1.22:3700');
   var field = document.getElementById('field');
   var sendButton = document.getElementById('send');
   var content = document.getElementById('content');
@@ -8,12 +8,7 @@ window.onload = function() {
   socket.on('message', function(data) { // process username
     console.log('Message received: ' + data.message);
     if(data.message) {
-      messages.push(data.message);
-      var html = '';
-      for(i=0; i<messages.length; i++) {
-        html += messages[i] + '<br />';
-      }
-      content.innerHTML = html;
+      content.innerHTML += data.username + ': ' + data.message + '<br />';
     } else {
       console.log('There is a problem:', data);
     }
@@ -22,9 +17,13 @@ window.onload = function() {
   sendButton.onclick = function() {
     var text = field.value;
     console.log('Sending message: ' + text);
-    socket.emit('send', {message: text}); // add sender name to message
+    socket.emit('send', {
+      username: username,
+      message: text
+    });
   }
 
   // Get username via popup
-  socket.emit('register', {name: username});
+  var username = prompt('Please enter your name:', '');
+  socket.emit('register', {username: username});
 }

@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var port = 3700;
+var users = [];
 
 app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/templates');
@@ -16,12 +17,11 @@ var io = require('socket.io').listen(expressApp);
 
 io.sockets.on('connection', function(socket) {
   console.log('Client connected');
-  socket.emit('message', { message: 'welcome'});
-
   socket.on('register', function(data) {
-    // store new person online
-    // send back list of online people
-  })
+    socket.emit('message', { message: 'Welcome ' + data.username + '.\n'});
+    users.push(data.username);
+    socket.broadcast.emit('message', { message: data.username + ' is now online'});
+  });
 
   socket.on('send', function(data) {
     console.log('Received chat message');
@@ -29,6 +29,7 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('disconnect', function() {
+    console.log()
     // tell everyone that user has left
   });
 });
