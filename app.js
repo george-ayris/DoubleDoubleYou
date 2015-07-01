@@ -11,11 +11,13 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-var io = require('socket.io').listen(app.listen(port));
+var expressApp = app.listen(port);
+var io = require('socket.io').listen(expressApp);
 
 io.sockets.on('connection', function(socket) {
   console.log('Client connected');
   socket.emit('message', { message: 'welcome'});
+
   socket.on('send', function(data) {
     console.log('Received chat message');
     io.sockets.emit('message', data);
