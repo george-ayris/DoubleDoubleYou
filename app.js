@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var port = 3700;
 var users = [];
-var chatServer = require('./chatServer.js');
+var chatServer = require('./chatServer');
 
 app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/templates');
@@ -25,7 +25,7 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('send', function(data) {
     console.log('Received chat message');
-    chatServer.send(io.sockets);
+    chatServer.send(data, io.sockets);
   });
 
   socket.on('disconnect', function() {

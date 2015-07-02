@@ -5,7 +5,7 @@ var register = function(data, socket) {
   socket.broadcast.emit('message', { message: data.username + ' is now online' });
 }
 
-var send = function(sockets) {
+var send = function(data, sockets) {
   sockets.emit('message', data);
 }
 
