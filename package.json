@@ -1,11 +1,18 @@
 {
-    "name": "cards",
-    "version": "0.0.0",
-    "description": "",
-    "dependencies": {
-        "socket.io": "latest",
-        "express": "latest",
-        "jade": "latest"
-    },
-    "author": "george"
+  "name": "cards",
+  "version": "0.0.0",
+  "description": "",
+  "dependencies": {
+    "socket.io": "latest",
+    "express": "latest",
+    "jade": "latest"
+  },
+  "author": "george",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest-cli": "^0.4.14",
+    "nodemon": "latest"
+  }
 }
