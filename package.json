@@ -9,7 +9,7 @@
   },
   "author": "george",
   "scripts": {
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "devDependencies": {
     "jest-cli": "^0.4.14",
