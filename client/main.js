@@ -1,11 +1,11 @@
 window.onload = function() {
   var messages = [];
-  var socket = io.connect('http://192.168.1.21:3700');
+  var chat = require('./chat.js');
   var messageInput = document.getElementById('field');
   var sendButton = document.getElementById('send');
   var content = document.getElementById('content');
 
-  socket.on('message', function(data) {
+  chat.registerListener('message', function(data) {
     if(data.username) {
       content.innerHTML += data.username + ': ' + data.message + '<br />';
     } else {
@@ -14,10 +14,7 @@ window.onload = function() {
   });
 
   sendButton.onclick = function() {
-    socket.emit('send', {
-      username: username,
-      message: messageInput.value
-    });
+    chat.sendMessage(messageInput.value);
     messageInput.value = "";
   };
 
@@ -28,6 +25,5 @@ window.onload = function() {
     }
   }
 
-  var username = prompt('Please enter your name:', '');
-  socket.emit('register', {username: username});
+  chat.registerUser(prompt('Please enter your name:', ''));
 }

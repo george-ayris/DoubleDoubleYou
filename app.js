@@ -4,7 +4,7 @@ var port = 3700;
 var users = [];
 var chatServer = require('./chatServer');
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/build'));
 app.set('views', __dirname + '/templates');
 app.set('view engine', 'jade');
 app.engine('jade', require('jade').__express);

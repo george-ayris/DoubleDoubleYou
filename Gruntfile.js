@@ -5,11 +5,19 @@ module.exports = function (grunt) {
       test: {
         cmd: 'jest --verbose'
       }
+    },
+    browserify: {
+      './build/bundle.js': './client/main.js'
+    },
+    watch: {
+      files: ['client/**/*.js'],
+      tasks: ['browserify']
     }
   });
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['exec:test']);
+  grunt.registerTask('default', ['exec:test', 'browserify', 'watch']);
 };
