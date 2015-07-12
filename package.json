@@ -1,18 +1,25 @@
 {
   "name": "cards",
   "version": "0.0.0",
-  "description": "",
   "dependencies": {
     "socket.io": "latest",
     "express": "latest",
     "jade": "latest"
   },
   "author": "george",
-  "scripts": {
-    "test": "jest --verbose"
-  },
   "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.8.0",
+    "grunt-exec": "^0.4.6",
     "jest-cli": "^0.4.14",
     "nodemon": "latest"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/george-ayris/DoubleDoubleYou.git"
+  },
+  "bugs": {
+    "url": "https://github.com/george-ayris/DoubleDoubleYou/issues"
+  },
+  "homepage": "https://github.com/george-ayris/DoubleDoubleYou"
 }
