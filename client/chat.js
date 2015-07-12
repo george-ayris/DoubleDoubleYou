@@ -19,5 +19,5 @@ module.exports = function(username) {
   return {
     sendMessage: sendMessage,
     registerOnMessage: registerOnMessage
-  }
+  };
 };

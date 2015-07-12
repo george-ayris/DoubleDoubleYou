@@ -25,5 +25,5 @@ window.onload = function() {
     if(event.keyCode == 13) {
       sendButton.click();
     }
-  }
-}
+  };
+};

@@ -16,8 +16,7 @@ function setupMockFunctions() {
 
 socketMock.resetMock = function() {
   setupMockFunctions();
-}
-
+};
 
 setupMockFunctions();
 module.exports = socketMock;
