@@ -1,25 +1,23 @@
-var currentUsername = "";
-var io = require('socket.io-client');
-var socket = io.connect('http://localhost:3700');
+module.exports = function(username) {
+  var currentUsername = username;
+  var io = require('socket.io-client');
+  var socket = io.connect('http://localhost:3700');
 
-var sendMessage = function(message) {
-  socket.emit('send', {
-    username: currentUsername,
-    message: message
-  });
-};
+  var sendMessage = function(message) {
+    socket.emit('send', {
+      username: currentUsername,
+      message: message
+    });
+  };
 
-var registerUser = function(username) {
-  currentUsername = username;
+  var registerOnMessage = function(callback) {
+    socket.on('message', callback);
+  };
+
   socket.emit('register', {username: username});
-};
 
-var registerListener = function(messageName, callback) {
-  socket.on(messageName, callback);
-}
-
-module.exports = {
-  sendMessage: sendMessage,
-  registerUser: registerUser,
-  registerListener: registerListener
+  return {
+    sendMessage: sendMessage,
+    registerOnMessage: registerOnMessage
+  }
 };

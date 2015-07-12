@@ -1,11 +1,13 @@
 window.onload = function() {
   var messages = [];
-  var chat = require('./chat.js');
+  var registerUsername = require('./chat.js');
   var messageInput = document.getElementById('field');
   var sendButton = document.getElementById('send');
   var content = document.getElementById('content');
 
-  chat.registerListener('message', function(data) {
+  var chatClient = registerUsername(prompt('Please enter your name:', ''));
+
+  chatClient.registerOnMessage(function(data) {
     if(data.username) {
       content.innerHTML += data.username + ': ' + data.message + '<br />';
     } else {
@@ -14,7 +16,7 @@ window.onload = function() {
   });
 
   sendButton.onclick = function() {
-    chat.sendMessage(messageInput.value);
+    chatClient.sendMessage(messageInput.value);
     messageInput.value = "";
   };
 
@@ -24,6 +26,4 @@ window.onload = function() {
       sendButton.click();
     }
   }
-
-  chat.registerUser(prompt('Please enter your name:', ''));
 }

@@ -1,0 +1,23 @@
+var socketMock = jest.genMockFromModule('socket.io-client');
+
+function setupMockFunctions() {
+  socketMock.emit = jest.genMockFunction();
+
+  socketMock.on = jest.genMockFunction().mockImplementation(
+    function(messageName, callback) {
+      var callbackKey = messageName + 'EventReceived';
+      socketMock[callbackKey] = callback;
+  });
+
+  socketMock.connect = function(hostname) {
+    return socketMock;
+  };
+};
+
+socketMock.resetMock = function() {
+  setupMockFunctions();
+}
+
+
+setupMockFunctions();
+module.exports = socketMock;
