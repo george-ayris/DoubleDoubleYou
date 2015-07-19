@@ -1,22 +1,41 @@
+// this generates the auto mock using jest meaning we only have to customise
+// the bits we need to do
 var socketMock = jest.genMockFromModule('socket.io-client');
 
+// adds a new set of functions to our mock
 function setupMockFunctions() {
+  // emit is an ordinary mock function
   socketMock.emit = jest.genMockFunction();
 
+  // this is a mock function that does something when it is called
+  // we supply a function to mockImplementation(..) which will be called
+  // when socket.on() is called and the arguments to socket.on() will be passed
+  // to our function
   socketMock.on = jest.genMockFunction().mockImplementation(
     function(messageName, callback) {
+      // add a property to our mock based on the messageName
+      // if socket.on('bob', function() {..}) is called in chatServer.js
+      // then mockSocket.bobEventReceived will equal the callback function
+      // that is passed in as the second argument
+      // this allows us to call the callback function in our test
       var callbackKey = messageName + 'EventReceived';
       socketMock[callbackKey] = callback;
   });
-
-  socketMock.connect = function(hostname) {
-    return socketMock;
-  };
 };
 
+// This looks a bit weird, but by having emit and on directly on the socketMock,
+// and not on a separate object, it means we can do socketMock.emit in our test
+// to get the mock function, rather than doing socketMock.connect().emit
+socketMock.connect = function(hostname) {
+  return socketMock;
+};
+
+// allows a reset of our mock functions between tests
 socketMock.resetMock = function() {
   setupMockFunctions();
 };
 
+// add the functions to the socketMock
 setupMockFunctions();
+// export our mock functions
 module.exports = socketMock;
