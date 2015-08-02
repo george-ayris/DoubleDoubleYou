@@ -64,4 +64,8 @@ describe('send message', function() {
     // and therefore the callback was called when we did messageEventReceived()
     expect(mockCallback.mock.calls.length).toBe(1);
   });
+
+  /* TEST FOR USER LIST ON REGISTER */
+
+  /* TEST FOR USER LIST ON DISCONNECT (NOT DONE YET) */
 });

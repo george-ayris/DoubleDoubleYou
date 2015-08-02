@@ -4,6 +4,7 @@
 // Execute this function when the window has loaded
 window.onload = function() {
   var messages = [];
+
   // Require in our clientside chat 'module' - separated out for clarity and
   // testability
   var registerUsername = require('./chat.js');
@@ -12,6 +13,7 @@ window.onload = function() {
   var messageInput = document.getElementById('field');
   var sendButton = document.getElementById('send');
   var content = document.getElementById('content');
+  var onlinelist = document.getElementById('onlinelist');
 
   // Call the function exported by chat.js, which we've named registerUsername,
   // with the result of the prompt asking for the user's name. registerUsername
@@ -25,6 +27,11 @@ window.onload = function() {
     // Add the message contents to the innerHTML of our chat window div
     if(data.username) {
       content.innerHTML += data.username + ': ' + data.message + '<br />';
+      var list = '';
+      for (user in data.users) {
+        list += data.users[user] + '<br />';
+      }
+      onlinelist.innerHTML = list;
     } else {
       content.innerHTML += data.message + '<br />';
     }
@@ -35,7 +42,7 @@ window.onload = function() {
     // Pass the value of the input box to our chatClient
     chatClient.sendMessage(messageInput.value);
     // Remove the contents of the input box
-    messageInput.value = "";
+    messageInput.value = '';
   };
 
   // Make pressing the enter button, when focused on the input box, click the

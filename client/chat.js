@@ -30,7 +30,9 @@ module.exports = function(username) {
   };
 
   // Register the user as soon as the module starts using the username.
-  socket.emit('register', {username: username});
+  socket.emit('register', {
+    username: username
+  });
 
   // Give back the two functions we've defined to main.js so it can communicate
   // with the server.

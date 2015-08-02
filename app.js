@@ -31,31 +31,36 @@ app.get('/', function(req, res) {
 var expressApp = app.listen(port);
 // Import and setup our websockets server to listen on the same port
 // We could have all the following code inside our chatServer module if we
-// decide that it's clearer. 
+// decide that it's clearer.
 var io = require('socket.io').listen(expressApp);
 
 // When we receive a connection from a new browser, call the function we've
 // defined and pass in the socket (connection) to that browser.
 // Here we define all the messages we want to listen to and how to process them.
+var users = [];
+
 io.sockets.on('connection', function(socket) {
   console.log('Client connected');
-
   // When we receive a message labelled 'register', call our function passing
   // in the data that was sent in the message. In this case it's:
   // {username: 'myusername'}
   socket.on('register', function(data) {
-    console.log('Registering');
+    console.log('Registering ' + data.username);
+    users.push(data.username);
+
     // Pass data and the connection to our chatServer module
     // By putting all the logic in a separate function it makes it easy to test
     // without a real websockets connection - we can pass in a fake socket in
     // our tests.
+    data['users'] = users;
+    chatServer.send(data, io.sockets);
     chatServer.register(data, socket);
   });
 
   // Call our function when we get a 'send' message. Data in this case is:
   // {username: 'myUsername', message: 'Hello'}
   socket.on('send', function(data) {
-    console.log('Received chat message');
+    console.log(data.username + ' sent message: ' + data.message);
     // Pass the data and the connection to all the browsers into our chatServer
     // This allows us to forward on the message to all connected clients.
     chatServer.send(data, io.sockets);
@@ -66,6 +71,11 @@ io.sockets.on('connection', function(socket) {
   // will call for us.
   socket.on('disconnect', function() {
     console.log(socket.username + ' disconnected');
+    var index = users.indexOf(socket.username);
+    if (index >= 0) {
+      users.splice( index, 1 );
+    }
+
     // Pass the socket that was disconnected into the chatServer.
     chatServer.disconnect(socket);
   });
