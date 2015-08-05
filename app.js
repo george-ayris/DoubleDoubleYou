@@ -16,15 +16,13 @@ var chatServer = require('./chatServer');
 app.use(express.static(__dirname + '/build'));
 // Where our templates (or html) are saved
 app.set('views', __dirname + '/templates');
-// Setup jade, so that we can write .jade files that are turned into html
-app.set('view engine', 'jade');
-app.engine('jade', require('jade').__express);
-
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'ejs');
 // On any incoming web request ('/') render index.jade as a html page and send it back
 // req is the incoming request
 // res is the response we reply with
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('index.html');
 });
 
 // Set express to listen for web requests on our desired port
