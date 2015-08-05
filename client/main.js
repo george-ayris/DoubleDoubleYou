@@ -10,10 +10,10 @@ window.onload = function() {
   var registerUsername = require('./chat.js');
   // Get some bits of the DOM (i.e. the html tree structure) that will be useful
   // to us
-  var messageInput = document.getElementById('field');
+  var messageInput = document.getElementById('message-input');
   var sendButton = document.getElementById('send');
-  var content = document.getElementById('content');
-  var onlinelist = document.getElementById('onlinelist');
+  var chatWindow = document.getElementById('chat-window');
+  var onlineList = document.getElementById('online-list');
 
   // Call the function exported by chat.js, which we've named registerUsername,
   // with the result of the prompt asking for the user's name. registerUsername
@@ -26,14 +26,14 @@ window.onload = function() {
   chatClient.registerOnMessage(function(data) {
     // Add the message contents to the innerHTML of our chat window div
     if(data.username) {
-      content.innerHTML += data.username + ': ' + data.message + '<br />';
+      chatWindow.innerHTML += data.username + ': ' + data.message + '<br />';
       var list = '';
       for (user in data.users) {
         list += data.users[user] + '<br />';
       }
-      onlinelist.innerHTML = list;
+      onlineList.innerHTML = list;
     } else {
-      content.innerHTML += data.message + '<br />';
+      chatWindow.innerHTML += data.message + '<br />';
     }
   });
 

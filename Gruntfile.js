@@ -7,7 +7,7 @@ module.exports = function (grunt) {
       }
     },
     browserify: {
-      './build/bundle.js': './client/main.js'
+      './public/build/bundle.js': './client/main.js'
     },
     watch: {
       files: ['client/**/*.js'],
