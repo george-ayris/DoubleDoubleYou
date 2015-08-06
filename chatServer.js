@@ -11,7 +11,7 @@ var register = function(data, socket) {
   socket.broadcast.emit('message', { message: data.username + ' is now online' });
 };
 
-var send = function(data, sockets) {
+var sendChatMessage = function(data, sockets) {
   // Forward message onto all connected clients (this includes the current one)
   sockets.emit('message', data);  // data is JSON {username: "Robin", message: "Long live the King!"}
   console.log(data);
@@ -27,6 +27,6 @@ var disconnect = function(socket) {
 // assigned to cs. Meaning you can do cs.register() for example.
 module.exports = {
   register: register,
-  send: send,
+  sendChatMessage: sendChatMessage,
   disconnect: disconnect
 };

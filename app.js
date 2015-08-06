@@ -51,7 +51,7 @@ io.sockets.on('connection', function(socket) {
     // without a real websockets connection - we can pass in a fake socket in
     // our tests.
     data['users'] = users;
-    chatServer.send(data, io.sockets);
+    chatServer.sendChatMessage(data, io.sockets);
     chatServer.register(data, socket);
   });
 
@@ -62,7 +62,7 @@ io.sockets.on('connection', function(socket) {
     // Pass the data and the connection to all the browsers into our chatServer
     // This allows us to forward on the message to all connected clients.
     data['users'] = users;
-    chatServer.send(data, io.sockets);
+    chatServer.sendChatMessage(data, io.sockets);
   });
 
   // Disconnect is a special event that we can hook into (like io.sockets.on('connection', ...))
@@ -75,7 +75,7 @@ io.sockets.on('connection', function(socket) {
       users.splice( index, 1 );
     }
 
-    chatServer.send(users, io.sockets);
+    chatServer.sendChatMessage(users, io.sockets);
     // Pass the socket that was disconnected into the chatServer.
     chatServer.disconnect(socket);
   });
