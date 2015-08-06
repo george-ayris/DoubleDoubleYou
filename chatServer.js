@@ -6,7 +6,7 @@ var register = function(data, socket) {
   //socket.emit('message', { message: 'Other online users are: ' + data.users}); // just indicative for now
   // Save the username on the socket itself. It's not stored in a variable in
   // this file because all sockets use the same copy of this module
-  socket.username = data.username;  // remember data is a JSON string {username: "King Richard"}
+  socket.username = data.username;  // remember data is JSON {username: "King Richard"}
   // broadcast is a socket function which sends a message to all other clients
   socket.broadcast.emit('message', { message: data.username + ' is now online' });
 };
@@ -14,7 +14,7 @@ var register = function(data, socket) {
 var send = function(data, sockets) {
   // Forward message onto all connected clients (this includes the current one)
   sockets.emit('message', data);  // data is JSON {username: "Robin", message: "Long live the King!"}
-  console.log(data)
+  console.log(data);
 };
 
 var disconnect = function(socket) {

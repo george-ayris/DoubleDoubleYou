@@ -14,8 +14,8 @@ describe('send message', function() {
   var chatClientRegister = require('../client/chat');
   // our custom socket mock
   var socketMock = require('../__mocks__/socket.io-client');
-  var message = "Why hello thar";
-  var username = "Buzz";
+  var message = "Long live King Richard!";
+  var username = "Robin Hood";
 
   // do this before each of the it functions are called
   // the reset means that they are not affected by each other/the order that
@@ -49,6 +49,11 @@ describe('send message', function() {
     expect(sendMessageSocketCall[1].username).toEqual(username);
   });
 
+  /* TEST FOR USERLIST UPDATE
+  it('adds the username to the list of online users', function() {
+
+  });*/
+
   // this test is why we want our custom socket mock
   // we want to call a function that is passed into our mock
   it('calls the callback when a message event is received', function() {
@@ -65,7 +70,24 @@ describe('send message', function() {
     expect(mockCallback.mock.calls.length).toBe(1);
   });
 
-  /* TEST FOR USER LIST ON REGISTER */
+  /* TEST FOR USER LIST ON MESSAGE
+  it("doesn't affect the user list", function() {
 
-  /* TEST FOR USER LIST ON DISCONNECT (NOT DONE YET) */
+  });*/
+
 });
+
+/* TESTS FOR DISCONNECTION EVENTS
+describe('close tab', function() {
+
+
+  /* 
+  it('tells remaining users that the person has left', function() {
+
+  });
+
+  /*
+  it('updates the online user list', function() {
+
+  });
+});*/

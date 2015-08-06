@@ -61,6 +61,7 @@ io.sockets.on('connection', function(socket) {
     console.log(data.username + ' sent message: ' + data.message);
     // Pass the data and the connection to all the browsers into our chatServer
     // This allows us to forward on the message to all connected clients.
+    data['users'] = users;
     chatServer.send(data, io.sockets);
   });
 
@@ -74,6 +75,7 @@ io.sockets.on('connection', function(socket) {
       users.splice( index, 1 );
     }
 
+    chatServer.send(users, io.sockets);
     // Pass the socket that was disconnected into the chatServer.
     chatServer.disconnect(socket);
   });
