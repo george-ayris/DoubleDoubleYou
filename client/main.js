@@ -26,26 +26,19 @@ window.onload = function() {
   chatClient.registerOnMessage(function(data) {
     // Add the message contents to the innerHTML of our chat window div
     if(data.username) {
-<<<<<<< Updated upstream
       chatWindow.innerHTML += data.username + ': ' + data.message + '<br />';
-=======
-      content.innerHTML += data.username + ': ' + data.message + '<br />';
     } else {
-      content.innerHTML += data.message + '<br />';
+      chatWindow.innerHTML += data.message + '<br />';
     }
     if(data.users) {
->>>>>>> Stashed changes
       var list = '';
       for (user in data.users) {
         list += data.users[user] + '<br />';
       }
-<<<<<<< Updated upstream
       onlineList.innerHTML = list;
     } else {
       chatWindow.innerHTML += data.message + '<br />';
-=======
-      onlinelist.innerHTML = list;
->>>>>>> Stashed changes
+      onlineList.innerHTML = list;
     }
   });
 
