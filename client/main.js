@@ -26,7 +26,9 @@ window.onload = function() {
   chatClient.registerOnMessage(function(data) {
     // Add the message contents to the innerHTML of our chat window div
     if(data.username) {
-      chatWindow.innerHTML += data.username + ': ' + data.message + '<br />';
+      if (data.message) {
+        chatWindow.innerHTML += data.username + ': ' + data.message + '<br />';
+      }
     } else {
       chatWindow.innerHTML += data.message + '<br />';
     }
@@ -36,10 +38,7 @@ window.onload = function() {
         list += data.users[user] + '<br />';
       }
       onlineList.innerHTML = list;
-    } else {
-      chatWindow.innerHTML += data.message + '<br />';
-      onlineList.innerHTML = list;
-    }
+    } 
   });
 
   // When the send button is clicked call the function
